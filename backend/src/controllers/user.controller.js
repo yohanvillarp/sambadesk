@@ -1,9 +1,14 @@
 import {
   createUserWithSamba,
+  listUserWithSamba
 } from "../services/samba.service.js";
 
+export const listUser = async (req,res) => {
+  const result = await listUserWithSamba();
+  res.json({ message: "✅ Listado de usuarios", result });
+}
+
 export const createUser = async (req, res) => {
-  console.log("________________________________---");
   const {
     username,
     password,

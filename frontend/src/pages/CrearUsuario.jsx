@@ -102,6 +102,8 @@ function CrearUsuario() {
 
   return (
 
+    
+
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto grid gap-5 p-4">
       <Input label="Nombre de usuario" name="username" value={formData.username} onChange={handleChange} required />
       {!formData.useRandomPassword && (

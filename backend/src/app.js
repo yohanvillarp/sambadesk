@@ -24,6 +24,42 @@ app.use((req, res, next) => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
+// ruta /
+app.get('/', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>SambaDesk</title>
+        <style>
+          body {
+            font-family: sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .container {
+            text-align: center;
+          }
+          h1 {
+            color: #2c3e50;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Bienvenido a SambaDesk Backend</h1>
+          <p>El servidor está corriendo correctamente 🎉</p>
+        </div>
+      </body>
+    </html>
+  `);
+});
+
+
 // Puerto
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
