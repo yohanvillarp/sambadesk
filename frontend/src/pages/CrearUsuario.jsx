@@ -53,15 +53,23 @@ function CrearUsuario() {
       }
 
       const result = await Swal.fire({
-        icon: 'success',
-        title: 'Usuario creado',
-        text: data.message || `El usuario "${formData.username}" fue creado correctamente.`,
+        icon: "success",
+        title: "Usuario creado",
+        text:
+          data.message ||
+          `El usuario "${formData.username}" fue creado correctamente.`,
         showCancelButton: true,
-        confirmButtonText: 'Crear nuevo usuario',
-        cancelButtonText: 'Volver al menú',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#aaa',
+        confirmButtonText: "Crear nuevo usuario",
+        cancelButtonText: "Volver al menú",
+        buttonsStyling: false, // 🔧 desactiva estilos default
+        customClass: {
+          confirmButton:
+            "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none",
+          cancelButton:
+            "bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 focus:outline-none",
+        },
       });
+
 
       if (result.isConfirmed) {
         // Limpiar formulario
@@ -95,14 +103,21 @@ function CrearUsuario() {
         icon: 'error',
         title: 'Error al crear el usuario',
         text: error.message || 'Algo salió mal.',
+        confirmButtonText: 'Cerrar',
+        buttonsStyling: false, // desactiva estilos por defecto
+        customClass: {
+          confirmButton:
+            'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none',
+        },
       });
+
     }
   };
 
 
   return (
 
-    
+
 
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto grid gap-5 p-4">
       <Input label="Nombre de usuario" name="username" value={formData.username} onChange={handleChange} required />
