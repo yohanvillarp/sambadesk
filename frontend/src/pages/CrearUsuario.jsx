@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2'
+import Input from '../components/Input.jsx';
+import Checkbox from '../components/Checkbox.jsx';
 
 function CrearUsuario() {
   const [formData, setFormData] = useState({
@@ -24,36 +27,49 @@ function CrearUsuario() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: type === 'checkbox' ? checked : value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const comando = `samba-tool user create ${formData.username} ${formData.useRandomPassword ? '--random-password' : `"${formData.password}"`} \
-${formData.givenName ? `--given-name="${formData.givenName}"` : ''} \
-${formData.surname ? `--surname="${formData.surname}"` : ''} \
-${formData.initials ? `--initials="${formData.initials}"` : ''} \
-${formData.email ? `--mail="${formData.email}"` : ''} \
-${formData.description ? `--description="${formData.description}"` : ''} \
-${formData.ou ? `--userou="${formData.ou}"` : ''} \
-${formData.useUsernameAsCN ? '--use-username-as-cn' : ''} \
-${formData.mustChangePassword ? '--must-change-at-next-login' : ''} \
-${formData.homeDrive ? `--home-drive="${formData.homeDrive}"` : ''} \
-${formData.homeDirectory ? `--home-directory="${formData.homeDirectory}"` : ''} \
-${formData.scriptPath ? `--script-path="${formData.scriptPath}"` : ''} \
-${formData.profilePath ? `--profile-path="${formData.profilePath}"` : ''} \
-${formData.jobTitle ? `--job-title="${formData.jobTitle}"` : ''} \
-${formData.company ? `--company="${formData.company}"` : ''} \
-${formData.isEnabled ? '' : '--disabled'}`;
+    try {
+      const response = await fetch('http://localhost:3001/api/user/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    console.log('Comando generado:\n', comando);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.details || data.error || 'Error desconocido');
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario creado',
+        text: data.message || `El usuario "${formData.username}" fue creado correctamente.`,
+        confirmButtonColor: '#3085d6',
+      });
+
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al crear el usuario',
+        text: error.message || 'Algo salió mal.',
+      });
+    }
   };
 
   return (
+    
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto grid gap-5 p-4">
       <Input label="Nombre de usuario" name="username" value={formData.username} onChange={handleChange} required />
       {!formData.useRandomPassword && (
@@ -85,49 +101,5 @@ ${formData.isEnabled ? '' : '--disabled'}`;
   );
 }
 
-// Componentes reutilizables para mantener limpio el código
-
-const Input = ({ label, name, value, onChange, required = false, type = 'text' }) => {
-  const isEmptyOptional = !required && !value;
-
-  const baseClasses = "text-sm rounded-lg w-full p-2.5 border";
-  const optionalStyle = isEmptyOptional
-    ? "bg-yellow-50 border-yellow-300 text-yellow-800"
-    : "bg-gray-50 border-gray-300 text-gray-900";
-
-  return (
-    <div>
-      <label htmlFor={name} className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
-        {label} {!required && <span className="text-yellow-500 text-xs">(opcional)</span>}
-      </label>
-      <input
-        type={type}
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        className={`${baseClasses} ${optionalStyle}`}
-      />
-    </div>
-  );
-};
-
-
-const Checkbox = ({ label, name, checked, onChange }) => (
-  <div className="flex items-center">
-    <input
-      id={name}
-      name={name}
-      type="checkbox"
-      checked={checked}
-      onChange={onChange}
-      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
-    />
-    <label htmlFor={name} className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-      {label}
-    </label>
-  </div>
-);
 
 export default CrearUsuario;

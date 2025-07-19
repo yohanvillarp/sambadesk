@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 
 // Rutas
-app.use('/api/users', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
 // Puerto
