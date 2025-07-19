@@ -52,12 +52,43 @@ function CrearUsuario() {
         throw new Error(data.details || data.error || 'Error desconocido');
       }
 
-      Swal.fire({
+      const result = await Swal.fire({
         icon: 'success',
         title: 'Usuario creado',
         text: data.message || `El usuario "${formData.username}" fue creado correctamente.`,
+        showCancelButton: true,
+        confirmButtonText: 'Crear nuevo usuario',
+        cancelButtonText: 'Volver al menú',
         confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#aaa',
       });
+
+      if (result.isConfirmed) {
+        // Limpiar formulario
+        setFormData({
+          username: '',
+          password: '',
+          givenName: '',
+          surname: '',
+          initials: '',
+          email: '',
+          description: '',
+          ou: '',
+          useUsernameAsCN: false,
+          mustChangePassword: false,
+          isEnabled: true,
+          homeDrive: '',
+          homeDirectory: '',
+          scriptPath: '',
+          profilePath: '',
+          jobTitle: '',
+          company: '',
+          useRandomPassword: false,
+        });
+      } else {
+        // Redirigir al menú
+        window.location.href = '/';
+      }
 
     } catch (error) {
       Swal.fire({
@@ -68,8 +99,9 @@ function CrearUsuario() {
     }
   };
 
+
   return (
-    
+
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto grid gap-5 p-4">
       <Input label="Nombre de usuario" name="username" value={formData.username} onChange={handleChange} required />
       {!formData.useRandomPassword && (
