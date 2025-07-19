@@ -1,13 +1,15 @@
 import {
   createUserWithSamba,
-  listUserWithSamba
+  listUserWithSamba,
 } from "../services/samba.service.js";
 
-export const listUser = async (req,res) => {
+export const listUser = async (req, res) => {
   const result = await listUserWithSamba();
-  res.json({ message: "✅ Listado de usuarios", result });
-}
-
+  res.json({
+    message: "✅ Listado de usuarios",
+    result: result.split("\n").filter(Boolean),
+  });
+};
 
 export const createUser = async (req, res) => {
   const {
@@ -28,7 +30,7 @@ export const createUser = async (req, res) => {
     profilePath,
     jobTitle,
     company,
-    useRandomPassword
+    useRandomPassword,
   } = req.body;
 
   if (!username || (!password && !useRandomPassword)) {
@@ -54,7 +56,7 @@ export const createUser = async (req, res) => {
       profilePath,
       jobTitle,
       company,
-      useRandomPassword
+      useRandomPassword,
     });
 
     res.json({ message: "✅ Usuario creado", result });
@@ -64,4 +66,3 @@ export const createUser = async (req, res) => {
       .json({ error: "❌ Error al crear usuario", details: err.message });
   }
 };
-
