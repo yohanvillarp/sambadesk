@@ -1,0 +1,13 @@
+{
+  "message": "✅ Listado de usuarios",
+  "result": [
+    "Administrator",
+    "prueba1",
+    "juanperez",
+    "Guest",
+    "prueba2",
+    "parxita",
+    "krbtgt",
+    "randomcase"
+  ]
+}

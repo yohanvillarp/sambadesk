@@ -51,3 +51,8 @@ export async function listUserWithSamba() {
   const cmd = 'sudo samba-tool user list';
   return await execCommand(cmd);
 }
+
+export async function deleteUserWithSamba(username) {
+  const cmd = `sudo samba-tool user delete "${username}"`;
+  return await execCommand(cmd);
+}
