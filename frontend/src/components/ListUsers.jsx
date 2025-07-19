@@ -5,8 +5,8 @@ function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    fetch("/mock/usuarios.json")
-      // O usa tu backend: fetch("http://localhost:3000/api/user/list")
+    //fetch("/mock/usuarios.json")
+    fetch("http://localhost:3000/api/user/list")
       .then((res) => res.json())
       .then((data) => setUsuarios(data.result))
       .catch((err) => console.error("Error:", err));
