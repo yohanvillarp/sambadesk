@@ -5,7 +5,7 @@ function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/user/list") // Ajusta la URL si es necesario
+    fetch("http://localhost:3000/api/user/list") // Ajusta la URL si es necesario
       .then((res) => res.json())
       .then((data) => setUsuarios(data.result))
       .catch((err) => console.error("Error:", err));

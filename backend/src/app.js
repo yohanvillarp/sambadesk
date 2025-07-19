@@ -11,6 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Configurar CORS
+app.use(cors({
+  origin: 'http://localhost:5173', // permite peticiones solo desde tu frontend
+  credentials: true
+}));
+
+
 //middleware para ver solicitudes
 app.use((req, res, next) => {
   console.log(`📥 [${req.method}] ${req.url}`);
