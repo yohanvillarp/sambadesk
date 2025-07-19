@@ -1,4 +1,3 @@
-import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import './App.css';
@@ -14,6 +13,9 @@ import DNS from './pages/DNS';
 import CrearGrupo from './pages/CrearGrupo';
 
 import { ThemeProvider } from "@material-tailwind/react";
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+
 
 
 function App() {
@@ -23,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <PrivateRoute>
               <Dashboard />
@@ -90,7 +92,7 @@ function App() {
           }
         />
 
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </ThemeProvider>
   );
