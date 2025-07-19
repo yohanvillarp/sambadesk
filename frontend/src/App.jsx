@@ -5,7 +5,6 @@ import PrivateRoute from './components/PrivateRoute';
 
 import Usuarios from './components/Usuarios';
 import CrearUsuario from './pages/CrearUsuario';
-import ListaUsuarios from './pages/ListaUsuarios';
 import Grupos from './pages/Grupos';
 import Equipos from './pages/Equipos';
 import UnidadesOrganizativas from './pages/UnidadesOrganizativas';
@@ -14,7 +13,7 @@ import CrearGrupo from './pages/CrearGrupo';
 
 import { ThemeProvider } from "@material-tailwind/react";
 import { Routes, Route, Navigate } from 'react-router-dom';
-
+import ListUsers from './components/ListUsers';
 
 
 
@@ -45,7 +44,7 @@ function App() {
           path="/usuarios/lista"
           element={
             <PrivateRoute>
-              <ListaUsuarios />
+              <ListUsers />
             </PrivateRoute>
           }
         />

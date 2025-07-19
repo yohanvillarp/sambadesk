@@ -8,6 +8,7 @@ export const listUser = async (req,res) => {
   res.json({ message: "✅ Listado de usuarios", result });
 }
 
+
 export const createUser = async (req, res) => {
   const {
     username,
